@@ -1,7 +1,9 @@
 'use strict';
 
-console.log('=====> safari.applicaiton.browserWindows[0].activeTab.url in global.js: ', safari.application.browserWindows[0].activeTab.url);
+console.log('=====> safari.applicaiton.browserWindows[0].tabs[1] in global.js: ', safari.application.browserWindows[0].tabs[1]);
 // safari.application.browserWindows[0].activeTab.close();
+safari.application.browserWindows[0].tabs[1].activate();
+console.log('=====> all of the tabs everywhere!!!!!!!: ', gatherTabs());
 
 var handleChangeEvent, openOptionsPage, openTab, version;
 
@@ -11,6 +13,14 @@ function handleChangeEvent(event) {
     openOptionsPage();
   }
 };
+
+function gatherTabs() {
+  let allTabs = [];
+  safari.application.browserWindows.forEach(browserWindow => {
+    browserWindow.tabs.forEach(tab => allTabs.push({title: tab.title, url: tab.url}));
+  });
+  return allTabs;
+}
 
 function openTab(url) {
   var tab;
